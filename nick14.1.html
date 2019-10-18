@@ -1,0 +1,87 @@
+<html>
+<head>
+    <style>
+    body{
+    margin: 0;
+    }
+    .container{
+        width: 100%;
+        background-color: brown;
+        color: white;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+    .block{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 400px;
+        /* max-width: 250px; */
+        height: 200px;
+        box-shadow: 0 0 0 1px white;
+    }
+    .block-body{
+        box-shadow: 0 0 0 1px white;
+        display: flex;
+        width: 80%;
+        height: 50%;
+        font-size: 70%;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+</div>
+<script>
+    // let dataArr = [];
+    let container = document.querySelector('.container')
+
+    function htmlRequest(){
+        const url = 'https://jsonplaceholder.typicode.com/posts';
+        
+        const xmr = new XMLHttpRequest();
+        
+        xmr.open('GET', url, true);
+        
+        xmr.onload = (data)=>{
+            // console.log(data.srcElement.response)
+            data = JSON.parse(data.srcElement.response);
+            console.log(data)
+            data.forEach(item =>{setBlock(item)});
+        };
+        
+        xmr.onerror = function(err) {
+            console.log(err);
+        };
+        
+        xmr.send();
+    }
+
+    let setBlock = item => {
+        dataTest = item;
+        
+        let block = document.createElement('div');
+        block.className = `block id${item.id} usr-id${item.userId}`;
+
+        let title = document.createElement('div');
+        title.className = `block-title`;
+        title.innerText = item.title;
+
+        let blockBody = document.createElement('div');
+        blockBody.className = 'block-body';
+        blockBody.innerText = item.body;
+
+        block.appendChild(title);
+        block.appendChild(blockBody);
+        container.appendChild(block);
+    }
+
+    let dataTest;
+    htmlRequest()
+    </script>
+</body>
+</html>
